@@ -21,7 +21,7 @@
         "prettier": "prettier --write .",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
-        "prepare": "husky"
+        "prepare": "husky || true"
     },
     "repository": {
         "type": "git",
