@@ -275,7 +275,13 @@ export class Listener extends EventEmitter<ListenerEvents> {
                 const decodedData = new TextDecoder("utf-8").decode(dataToDecode);
                 if (decodedData.length == 0) return;
 
-                const parsed = JSON.parse(decodedData);
+                let parsed;
+                try {
+                    parsed = JSON.parse(decodedData);
+                } catch {
+                    logger(this.ctx).verbose(`Received non-JSON WebSocket frame (cmd=${cmd}, subCmd=${subCmd}), skipping`);
+                    return;
+                }
 
                 if (version == 1 && cmd == 1 && subCmd == 1 && hasOwn(parsed, "key")) {
                     this.cipherKey = parsed.key;
